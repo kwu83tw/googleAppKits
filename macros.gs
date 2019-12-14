@@ -10,24 +10,33 @@ function getMe() {
   Logger.log(response.getContentText());
 }
 
-// Get chat_id from myself. Return info from what bot received as JSON data.
-function getMessage(){
+// Get chat_id from myself
+function getUpdatedMsg(){
   var url = telegramUrl + "/getUpdates";
   var res = UrlFetchApp.fetch(url);
   Logger.log(res.getContentText());
 }
 
-/**
-// Testing func
-function sendMessageToRoom(){
-  var url = telegramUrl + "/sendMessage?text=" + encodeURIComponent("error") + "&chat_id=174853173";
+// Required chat_id
+function testSendMessageToRoom(){
+  var msg = "每日一善回報員測試";
+  var url = telegramUrl + "/sendMessage?text=" + encodeURIComponent(msg) + "&chat_id=";
   var res = UrlFetchApp.fetch(url);
   Logger.log(res.getContentText());
 }  
-**/
+
+function testTriggeringFunc() {
+  deleteMsgInRoom("", "");
+}
+
+function deleteMsgInRoom(chat_id, msg_id) {
+  var url = telegramUrl + "/deleteMessage?chat_id=" + chat_id + "&message_id=" + msg_id;
+  var res = UrlFetchApp.fetch(url);
+  Logger.log(res.getContentText());
+}
   
-function sendMessageToKent(e){
-  var url = telegramUrl + "/sendMessage?text=" + encodeURIComponent(e) + "&chat_id=170537126";
+function sendMessageToRoom(e){
+  var url = telegramUrl + "/sendMessage?text=" + encodeURIComponent(e) + "&chat_id=";
   var res = UrlFetchApp.fetch(url);
   Logger.log(res.getContentText());
 }
@@ -38,9 +47,9 @@ function callTrigger() {
   // Add trigger
   ScriptApp.newTrigger('ccr')
     .timeBased()
-    .atHour(18)
-    .nearMinute(59)
-    .everyDays(1)
+    .atHour()
+    .nearMinute()
+    .everyDays()
     .inTimezone("America/Los_Angeles")
     .create();
 }
@@ -66,7 +75,7 @@ function getSum(preLastRow, curLastRow, targetCol) {
   var data = s.getRange(preLastRow+1, 3, curLastRow-preLastRow).getValues();
   var count = 0; 
   var sum = 0;
-  Logger.log(data)
+  Logger.log(data);
   for (i=0; i<=data.length; i++){
     if (data[i]) {
       count = count + 1;
@@ -76,7 +85,7 @@ function getSum(preLastRow, curLastRow, targetCol) {
   return {
       count: count,
       sum: sum
-  }
+  };
 }
 
 function ccr() {
@@ -97,22 +106,27 @@ function ccr() {
     sheet.getRange(sheet.getLastRow(), sheet.getLastColumn()-2).setValue(gs.sum);
     sheet.getRange(sheet.getLastRow(), sheet.getLastColumn()-1).setValue(gs.count);
     sheet.getRange(sheet.getLastRow(), sheet.getLastColumn()).setValue(sheet.getLastRow());
-  
-    var currentDate = new Date();
-    var datetime = (currentDate.getMonth()+1) + "/" + (currentDate.getDate());
-    var displayStr = "聖荷西館" + datetime + "每日一善";
-    var secondLine = "轉傳總人數： " + gs.sum.toString() + "人";
-    var thirdLine = "執行人數: " + gs.count.toString() + "人";
-    displayStr = displayStr + "\n" + secondLine + "\n" + thirdLine;
-    Logger.log(displayStr);
-    // Logger.log('聖荷西館 %s 每日一善轉傳總人數： %s 人 執行人數: %s 人', datetime, gs.sum.toString(), gs.count.toString());
+
+    var displayStr = compResportStr(gs.sum.toString(), gs.count.toString());
 
     // setting value of F1
     sheet.getRange(1, 6).clearContent();
     sheet.getRange(1, 6).setValue(displayStr);
 
     sendMessageToKent(displayStr);
-  };
+  }
+}
+
+function compReportStr (ttCount, pplCount) {
+    var currentDate = new Date();
+    var datetime = (currentDate.getMonth()+1) + "/" + (currentDate.getDate());
+    var displayStr = "聖荷西館" + datetime + "每日一善";
+    var secondLine = "轉傳總人數： " + ttCount + "人";
+    var thirdLine = "執行人數: " + pplCount + "人";
+    displayStr = displayStr + "\n" + secondLine + "\n" + thirdLine;
+    Logger.log(displayStr);
+    // Logger.log('聖荷西館 %s 每日一善轉傳總人數： %s 人 執行人數: %s 人', datetime, gs.sum.toString(), gs.count.toString());
+    return displayStr;
 }
 
 // Escape error causing by existing markup (if someone edit lastrow already)
