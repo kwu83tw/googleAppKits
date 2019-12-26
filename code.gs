@@ -1,10 +1,10 @@
-function getFormRes() {
+function createFormRes() {
   var FORMNAME = "Copy of 每日一善轉傳";
   var formHandle = DriveApp.getFilesByName(FORMNAME).next();
   var form = FormApp.openById(formHandle.getId());
   
   // form.createResponse()
-  var fromRes = form.createResponse();
+  var formRes = form.createResponse();
   
   // Date 2019-12-22
   var qtOne = form.addTextItem();
@@ -60,6 +60,6 @@ function getFormRes() {
       itemContext += "\n Time: " + formRes[i].getTimestamp() + "\n\n\n";
     }
     Logger.log(itemContext);
-   */
   }
+  */
 }
