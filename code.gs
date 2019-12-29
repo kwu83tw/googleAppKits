@@ -63,6 +63,8 @@ function doPost(e) {
   var form = FormApp.openById(formId);
   var formRes = form.createResponse();
 
+  // TODO: Add validation func to check user input
+  // TODO: Add helper text or hook up AI response regards to user input
   if ( !isNumeric(text) ) {
     sendMsg("Are you serious???\n" + text + "\n請輸入數字啦! 麻瓜!!! >>>", chatId);
     return;
@@ -75,10 +77,11 @@ function doPost(e) {
   addResponse(questions[0].asDateItem(), new Date(), formRes);
   
   // Name
+  var myname = "";
   if ( chatId.toString() == 170537126 ) {
-    var myname = "肯特";
+    myname = "肯特";
   } else {
-    var myname = "曉容";
+    myname = "曉容";
   }
   addResponse(questions[1].asTextItem(), myname, formRes);
   
@@ -103,7 +106,7 @@ function validateId(id) {
 }
 
 function isNumeric(text){
-  return !isNaN(text) && text > 0
+  return !isNaN(text) && text > 0;
 }
 
 
