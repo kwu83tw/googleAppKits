@@ -1,10 +1,30 @@
-function createFormRes() {
+function addResponse(qt, data, formResponse){
+  var qr = qt.createResponse(data);
+  formResponse.withItemResponse(qr);
+}
+
+function doPost(e) {
   var FORMNAME = "Copy of 每日一善轉傳";
   var formHandle = DriveApp.getFilesByName(FORMNAME).next();
   var form = FormApp.openById(formHandle.getId());
-  
-  // form.createResponse()
   var formRes = form.createResponse();
+ 
+  var questions = form.getItems();
+  // Date 2019-12-22
+  addResponse(question[0].asDateItem(), new Date(), formRes);
+  // Name
+  addResponse(question[1].asTextItem(), "肯特", formRes);
+  // 1012
+  addResponse(question[2].asListItem(), ["1012"], formRes);
+  // how many #
+  Logger.log(e)
+  var qt = question[3].asCheckboxItem();
+  addResponse(qt, ["300"], formRes);
+ 
+  formRes.submit();
+
+  /* 
+  form.createResponse()
   
   // Date 2019-12-22
   var qtOne = form.addTextItem();
@@ -32,10 +52,7 @@ function createFormRes() {
   // TODO: get # from bot chat
   var ansFour = qtFour.createResponse("300");
   formRes.withItemResponse(ansFour);
-
-  formRes.submit();
-
-
+  */
 
   /*
   // Getter
