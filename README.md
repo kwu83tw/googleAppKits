@@ -16,7 +16,7 @@ policy.
 
 ### Automate daily report routine work
 
-We need to do daily report for 每日一善 and we used to do that manually with tedious process. Here, we try to leverage GAS combining with its studio suites and telegram bot to assist our work. There are two phases of works in the following:
+We need to do daily report for 每日一善 and we used to do that manually with tedious process through submission of filled google form, manipulation on google spreadsheet to gather datasets and post result to Telegram chat room at specific timeslot. Here, we try to leverage GAS combining with its studio suites and telegram bot to assist our work. There are two phases of works in the following:
 
 #### Phase I
 Hook up Telegram bot to report analytics data to specific chat room.
