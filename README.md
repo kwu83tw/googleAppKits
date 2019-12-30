@@ -11,8 +11,9 @@
 ### Learn how to create telegram bot
 
 Telegram bot creation is easy. There are results in the google search
-everywhere and it's free of charge for now. TODO: Investigate its pricing
-policy.
+everywhere and it's free of charge for now. 
+
+TODO: Investigate its pricing policy.
 
 ### Automate daily report routine work
 
