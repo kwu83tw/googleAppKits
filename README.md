@@ -50,7 +50,7 @@ to link with Telegram bot and create webhook.
 ## Future improvement
 
 Some validation checks to consolidate the workflow.
-> Make sure user input valid number into the field. (cause it will break the flow if it's has non numeric value)
+> Make sure user input valid number into the field. (cause it will break the flow if it has non numeric value)
 >
 
 Hook up Dialogflow to make our bot smarter.
