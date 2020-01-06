@@ -1,4 +1,30 @@
-/** @OnlyCurrentDoc */
+// Line block //
+var channel_access_token = "";
+var line_url = "https://api.line.me/v2/bot/message/push";
+
+function send_msg_to_line_room (e, lineId) {
+  var payload = {
+      'to': lineId,
+      'messages': [{
+        'type': 'text',
+        'text': e
+      }]
+  };
+  var option = {
+    'headers': {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ' + channel_access_token,
+    },
+    'method': 'post',
+    'payload': JSON.stringify(payload)
+  };
+  var res = UrlFetchApp.fetch(line_url, option);
+  Logger.log(res.getResponseCode());
+  return res;
+}
+// End Line block //
+
+
 // Telegram block //
 var telegramToken = "YourSecret";
 var telegramUrl = "https://api.telegram.org/bot" + telegramToken;
@@ -40,7 +66,7 @@ function sendMessageToRoom(e){
   var res = UrlFetchApp.fetch(url);
   Logger.log(res.getContentText());
 }
-// Telegram block //
+// End Telegram block //
 
 
 function callTrigger() {
@@ -114,6 +140,7 @@ function ccr() {
     sheet.getRange(1, 6).setValue(displayStr);
 
     sendMessageToKent(displayStr);
+    send_msg_to_line_room(displayStr, "ID"); // TODO: need real ID getting from webhook object 
   }
 }
 
